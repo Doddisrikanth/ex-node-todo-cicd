@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage ('git clone') {
+            steps {
+                git url: 'https://github.com/LondheShubham153/node-todo-cicd.git',
+                    branch: 'master'
+            }
+        }
+        stage ('build') {
+            steps {
+                sh 'docker image build -t sri .'
+            }
+        }
+        stage ('deploy') {
+            steps {
+                sh 'docker container run -d --name todo1 -P sri'
+            }
+        }
+    }
+}
